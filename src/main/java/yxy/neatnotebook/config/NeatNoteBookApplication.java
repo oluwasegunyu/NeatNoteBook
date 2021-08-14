@@ -1,5 +1,6 @@
 package yxy.neatnotebook.config;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +10,7 @@ import org.springframework.core.env.Environment;
 
 @ComponentScan("yxy.neatnotebook")
 @SpringBootApplication
+@MapperScan("yxy.neatnotebook.mapper")
 public class NeatNoteBookApplication {
 
     private static final Logger LOG = LoggerFactory.getLogger(NeatNoteBookApplication.class);

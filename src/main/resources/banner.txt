@@ -1,0 +1,24 @@
+
+
+YYYYYYY       YYYYYYYXXXXXXX       XXXXXXXYYYYYYY       YYYYYYY
+Y:::::Y       Y:::::YX:::::X       X:::::XY:::::Y       Y:::::Y
+Y:::::Y       Y:::::YX:::::X       X:::::XY:::::Y       Y:::::Y
+Y::::::Y     Y::::::YX::::::X     X::::::XY::::::Y     Y::::::Y
+YYY:::::Y   Y:::::YYYXXX:::::X   X:::::XXXYYY:::::Y   Y:::::YYY
+   Y:::::Y Y:::::Y      X:::::X X:::::X      Y:::::Y Y:::::Y
+    Y:::::Y:::::Y        X:::::X:::::X        Y:::::Y:::::Y
+     Y:::::::::Y          X:::::::::X          Y:::::::::Y
+      Y:::::::Y           X:::::::::X           Y:::::::Y
+       Y:::::Y           X:::::X:::::X           Y:::::Y
+       Y:::::Y          X:::::X X:::::X          Y:::::Y
+       Y:::::Y       XXX:::::X   X:::::XXX       Y:::::Y
+       Y:::::Y       X::::::X     X::::::X       Y:::::Y
+    YYYY:::::YYYY    X:::::X       X:::::X    YYYY:::::YYYY
+    Y:::::::::::Y    X:::::X       X:::::X    Y:::::::::::Y
+    YYYYYYYYYYYYY    XXXXXXX       XXXXXXX    YYYYYYYYYYYYY
+
+
+
+
+
+

@@ -2,8 +2,9 @@ package yxy.neatnotebook.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yxy.neatnotebook.domain.Ebook;
+import yxy.neatnotebook.req.EbookReq;
 import yxy.neatnotebook.resp.CommonResp;
+import yxy.neatnotebook.resp.EbookResp;
 import yxy.neatnotebook.service.EbookService;
 
 import javax.annotation.Resource;
@@ -18,9 +19,9 @@ public class EbookController {
 
 
     @RequestMapping("/list")
-    public CommonResp list(){
-        CommonResp<List<Ebook>> resp = new CommonResp<>();
-        List<Ebook>  list = ebookService.list();
+    public CommonResp list(EbookReq req){
+        CommonResp<List<EbookResp>> resp = new CommonResp<>();
+        List<EbookResp>  list = ebookService.list(req);
         resp.setContent(list);
         return resp;
     }

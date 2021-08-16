@@ -12,6 +12,7 @@ import yxy.neatnotebook.domain.EbookExample;
 import yxy.neatnotebook.mapper.EbookMapper;
 import yxy.neatnotebook.req.EbookReq;
 import yxy.neatnotebook.resp.EbookResp;
+import yxy.neatnotebook.resp.PageResp;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -25,13 +26,13 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public List<EbookResp> list(EbookReq req){
+    public PageResp<EbookResp> list(EbookReq req){
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         if(!ObjectUtils.isEmpty(req.getName())){
             criteria.andNameLike("%"+ req.getName() + "%");
         }
-        PageHelper.startPage(1, 3);
+        PageHelper.startPage(req.getPage(), req.getSize());
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
         PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
@@ -44,6 +45,11 @@ public class EbookService {
             BeanUtils.copyProperties(ebook, ebookResp);
             respList.add(ebookResp);
         }
-        return respList;
+
+        PageResp<EbookResp>  pageResp = new PageResp<>();
+        pageResp.setTotal(pageInfo.getTotal());
+        pageResp.setList(respList);
+
+        return pageResp;
     }
 }

@@ -16,7 +16,7 @@
         </template>
         <template v-slot:action="{}">
           <a-space size="small">
-            <a-button type="primary">
+            <a-button type="primary" @click="edit">
               编辑
             </a-button>
             <a-button type="danger">
@@ -27,6 +27,10 @@
       </a-table>
     </a-layout-content>
   </a-layout>
+
+  <a-modal v-model:visible="modalVisible" title="笔记表单" @ok="handleModalOk">
+    <p>Some contents...</p>
+  </a-modal>
 </template>
 
 <script lang="ts">
@@ -110,6 +114,25 @@ export default defineComponent({
       });
     };
 
+    //----表单-----
+    const modalVisible = ref<boolean>(false);
+    const showModal = () => {
+      modalVisible.value = true;
+    };
+    const handleModalOk = (e: MouseEvent) => {
+      console.log(e);
+      modalVisible.value = false;
+    };
+
+    /**
+     * 编辑
+     */
+    const edit = () => {
+      modalVisible.value = true;
+    }
+
+
+
     onMounted(()=>{
       handleQuery({
         page: 1,
@@ -123,6 +146,12 @@ export default defineComponent({
       loading,
       handleTableChange,
       columns,
+
+      //编辑
+      edit,
+      modalVisible,
+      showModal,
+      handleModalOk,
     }
   }
 });

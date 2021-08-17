@@ -10,8 +10,9 @@ import org.springframework.util.ObjectUtils;
 import yxy.neatnotebook.domain.Ebook;
 import yxy.neatnotebook.domain.EbookExample;
 import yxy.neatnotebook.mapper.EbookMapper;
-import yxy.neatnotebook.req.EbookReq;
-import yxy.neatnotebook.resp.EbookResp;
+import yxy.neatnotebook.req.EbookQueryReq;
+import yxy.neatnotebook.req.EbookSaveReq;
+import yxy.neatnotebook.resp.EbookQueryResp;
 import yxy.neatnotebook.resp.PageResp;
 
 import javax.annotation.Resource;
@@ -26,7 +27,7 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public PageResp<EbookResp> list(EbookReq req){
+    public PageResp<EbookQueryResp> list(EbookQueryReq req){
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         if(!ObjectUtils.isEmpty(req.getName())){
@@ -39,17 +40,31 @@ public class EbookService {
         LOG.info("总行数: {}", pageInfo.getTotal());
         LOG.info("总页数: {}", pageInfo.getPages());
 
-        List<EbookResp> respList = new ArrayList<>();
+        List<EbookQueryResp> respList = new ArrayList<>();
         for(Ebook ebook: ebookList){
-            EbookResp ebookResp = new EbookResp();
+            EbookQueryResp ebookResp = new EbookQueryResp();
             BeanUtils.copyProperties(ebook, ebookResp);
             respList.add(ebookResp);
         }
 
-        PageResp<EbookResp>  pageResp = new PageResp<>();
+        PageResp<EbookQueryResp>  pageResp = new PageResp<>();
         pageResp.setTotal(pageInfo.getTotal());
         pageResp.setList(respList);
 
         return pageResp;
+    }
+
+    /**
+     * 保存J
+      */
+    public void save(EbookSaveReq req){
+        Ebook ebook = new Ebook();
+        BeanUtils.copyProperties(req, ebook);
+        if(ObjectUtils.isEmpty(req.getId())){
+            //Insert new note
+            ebookMapper.insert(ebook);
+        }else {
+            ebookMapper.updateByPrimaryKey(ebook);
+        }
     }
 }

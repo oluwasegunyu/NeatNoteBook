@@ -1,6 +1,6 @@
-package yxy.neatnotebook.resp;
+package yxy.neatnotebook.req;
 
-public class EbookResp {
+public class EbookSaveReq {
     private Long id;
 
     private String name;

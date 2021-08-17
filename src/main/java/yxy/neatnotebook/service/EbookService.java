@@ -17,6 +17,7 @@ import yxy.neatnotebook.resp.PageResp;
 import yxy.neatnotebook.util.SnowFlake;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 

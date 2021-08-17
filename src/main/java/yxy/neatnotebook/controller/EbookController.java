@@ -24,14 +24,16 @@ public class EbookController {
         CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
         PageResp<EbookQueryResp> list = ebookService.list(req);
         resp.setContent(list);
+        resp.setSuccess(true);
         return resp;
     }
 
 
     @PostMapping("/save")
-    public CommonResp save(@RequestBody EbookSaveReq req){
+    public CommonResp save(@RequestBody @Valid EbookSaveReq req){
         CommonResp resp = new CommonResp<>();
         ebookService.save(req);
+        resp.setSuccess(true);
         return resp;
     }
 
@@ -40,6 +42,7 @@ public class EbookController {
     public CommonResp delete(@PathVariable Long id){
         CommonResp resp = new CommonResp<>();
         ebookService.delete(id);
+        resp.setSuccess(true);
         return resp;
     }
     

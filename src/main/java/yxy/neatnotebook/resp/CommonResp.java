@@ -5,7 +5,7 @@ public class CommonResp<T> {
     /**
      * 业务上的成功或失败
      */
-    private boolean success = true;
+    private boolean success = false;
 
     /**
      * 返回信息

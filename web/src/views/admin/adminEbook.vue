@@ -3,6 +3,11 @@
     <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
+      <p>
+        <a-button type="primary" @click="add()" size="large">
+          新增
+        </a-button>
+      </p>>
       <a-table
           :columns="columns"
           :data-source="ebooks"
@@ -19,7 +24,7 @@
             <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
-            <a-button type="danger">
+            <a-button type="danger" @click="handleDelete(record.id)">
               删除
             </a-button>
           </a-space>
@@ -151,13 +156,35 @@ export default defineComponent({
         }
       });
     };
-
+    /**
+     * add new note
+     */
+    const add = () => {
+      modalVisible.value = true;
+      ebook.value = {};
+    }
     /**
      * 编辑
      */
     const edit = (record: any) => {
       modalVisible.value = true;
       ebook.value = record;
+    }
+
+    /**
+     * delete the note
+     */
+    const handleDelete = (id: number) => {
+      axios.delete("/ebook/delete/" + id).then((response)=>{
+        const data = response.data;
+        if(data.success){
+          //重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize,
+          });
+        }
+      });
     }
 
 
@@ -179,9 +206,11 @@ export default defineComponent({
       //编辑
       ebook,
       edit,
+      add,
       modalVisible,
       showModal,
       handleModalOk,
+      handleDelete,
     }
   }
 });

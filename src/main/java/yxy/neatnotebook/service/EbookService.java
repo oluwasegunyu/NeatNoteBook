@@ -14,6 +14,7 @@ import yxy.neatnotebook.req.EbookQueryReq;
 import yxy.neatnotebook.req.EbookSaveReq;
 import yxy.neatnotebook.resp.EbookQueryResp;
 import yxy.neatnotebook.resp.PageResp;
+import yxy.neatnotebook.util.SnowFlake;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class EbookService {
 
     @Resource
     private EbookMapper ebookMapper;
+
+    @Resource
+    private SnowFlake snowFlake;
 
     public PageResp<EbookQueryResp> list(EbookQueryReq req){
         EbookExample ebookExample = new EbookExample();
@@ -55,16 +59,25 @@ public class EbookService {
     }
 
     /**
-     * 保存J
+     * 保存
       */
     public void save(EbookSaveReq req){
         Ebook ebook = new Ebook();
         BeanUtils.copyProperties(req, ebook);
         if(ObjectUtils.isEmpty(req.getId())){
             //Insert new note
+            ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
         }else {
             ebookMapper.updateByPrimaryKey(ebook);
         }
+    }
+
+
+    /**
+     * 删除
+     */
+    public void delete(Long id){
+        ebookMapper.deleteByPrimaryKey(id);
     }
 }

@@ -1,9 +1,6 @@
 package yxy.neatnotebook.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import yxy.neatnotebook.req.EbookQueryReq;
 import yxy.neatnotebook.req.EbookSaveReq;
 import yxy.neatnotebook.resp.CommonResp;
@@ -21,7 +18,7 @@ public class EbookController {
     private EbookService ebookService;
 
 
-    @RequestMapping("/list")
+    @GetMapping("/list")
     public CommonResp list(EbookQueryReq req){
         CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
         PageResp<EbookQueryResp> list = ebookService.list(req);
@@ -34,6 +31,14 @@ public class EbookController {
     public CommonResp save(@RequestBody EbookSaveReq req){
         CommonResp resp = new CommonResp<>();
         ebookService.save(req);
+        return resp;
+    }
+
+
+    @DeleteMapping("/delete/{id}")
+    public CommonResp delete(@PathVariable Long id){
+        CommonResp resp = new CommonResp<>();
+        ebookService.delete(id);
         return resp;
     }
     

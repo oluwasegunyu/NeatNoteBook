@@ -14,9 +14,9 @@
         <template #cover="{ text:cover }">
           <img v-if="cover" :src="cover" alt="avatar" />
         </template>
-        <template v-slot:action="{}">
+        <template v-slot:action="{record}">
           <a-space size="small">
-            <a-button type="primary" @click="edit">
+            <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
             <a-button type="danger">
@@ -29,7 +29,23 @@
   </a-layout>
 
   <a-modal v-model:visible="modalVisible" title="笔记表单" @ok="handleModalOk">
-    <p>Some contents...</p>
+    <a-form :model="ebook" :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form-item label="封面">
+        <a-input v-model:value="ebook.cover" />
+      </a-form-item>
+      <a-form-item label="名称">
+        <a-input v-model:value="ebook.name" />
+      </a-form-item>
+      <a-form-item label="分类">
+        <a-input v-model:value="ebook.category1Id" />
+      </a-form-item>
+      <a-form-item label="子类">
+        <a-input v-model:value="ebook.category2Id" />
+      </a-form-item>
+      <a-form-item label="描述">
+        <a-input v-model:value="ebook.description" />
+      </a-form-item>
+    </a-form>
   </a-modal>
 </template>
 
@@ -115,6 +131,7 @@ export default defineComponent({
     };
 
     //----表单-----
+    const ebook = ref({});
     const modalVisible = ref<boolean>(false);
     const showModal = () => {
       modalVisible.value = true;
@@ -127,8 +144,9 @@ export default defineComponent({
     /**
      * 编辑
      */
-    const edit = () => {
+    const edit = (record: any) => {
       modalVisible.value = true;
+      ebook.value = record;
     }
 
 
@@ -148,6 +166,7 @@ export default defineComponent({
       columns,
 
       //编辑
+      ebook,
       edit,
       modalVisible,
       showModal,

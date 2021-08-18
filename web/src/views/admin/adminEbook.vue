@@ -37,6 +37,12 @@
         <template #cover="{ text:cover }">
           <img v-if="cover" :src="cover" alt="avatar" />
         </template>
+        <template v-slot:category1="{record}">
+          <span>{{getCategoryName(record.category1Id)}}</span>
+        </template>
+        <template v-slot:category2="{record}">
+          <span>{{getCategoryName(record.category2Id)}}</span>
+        </template>
         <template v-slot:action="{record}">
           <a-space size="small">
             <a-button type="primary" @click="edit(record)">
@@ -114,12 +120,11 @@ export default defineComponent({
       },
       {
         title: '类别',
-        key: 'category1Id',
-        dataIndex: 'category1Id',
+        slots: {customRender: 'category1'}
       },
       {
         title: '子类',
-        dataIndex: 'category2Id',
+        slots: {customRender: 'category2'}
       },
       {
         title: '阅读',
@@ -141,6 +146,8 @@ export default defineComponent({
      */
     const handleQuery = (params: any) => {
       loading.value = true;
+      //查询前清空，否则数据不刷新
+      ebooks.value = [];
       axios.get("/ebook/list", {
         params: {
           page: params.page,
@@ -229,6 +236,7 @@ export default defineComponent({
     }
 
     const level1 =  ref();
+    let categorys:any;
     /**
      * 查询所有分类
      **/
@@ -238,7 +246,7 @@ export default defineComponent({
         loading.value = false;
         const data = response.data;
         if (data.success) {
-          const categorys = data.content;
+          categorys = data.content;
           console.log("原始数组：", categorys);
 
           level1.value = [];
@@ -250,6 +258,16 @@ export default defineComponent({
       });
     };
 
+    //获取类别名称
+    const getCategoryName = (cid: number) => {
+      let result = "";
+      categorys.forEach((item: any) => {
+        if(item.id === cid) {
+          result = item.name;
+        }
+      });
+      return result;
+    };
     onMounted(()=>{
       handleQueryCategory();
       handleQuery({
@@ -264,6 +282,7 @@ export default defineComponent({
       loading,
       handleTableChange,
       columns,
+      getCategoryName,
 
       //编辑
       ebook,

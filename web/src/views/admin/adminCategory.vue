@@ -28,7 +28,7 @@
       </a-form>
       <a-table
           :columns="columns"
-          :data-source="categorys"
+          :data-source="level1"
           :row-key="record => record.id"
           :loading="loading"
           :pagination="false"
@@ -108,6 +108,7 @@ export default defineComponent({
       },
     ];
 
+    const level1 = ref();
     /**
      * 数据查询
      */
@@ -118,6 +119,8 @@ export default defineComponent({
         const data = response.data;
         if(data.success) {
           categorys.value = data.content;
+          level1.value = [];
+          level1.value = Tool.array2Tree(categorys.value, 0)
         }else{
           message.error(data.message);
         }
@@ -179,9 +182,10 @@ export default defineComponent({
     });
 
     return {
-      categorys,
+      //categorys,
       loading,
       columns,
+      level1,
 
       //编辑
       category,
